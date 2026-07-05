@@ -1,5 +1,10 @@
 # Sentiscope
 
+## Base de données (partie 2)
+
+Schéma MySQL, import de données annotées et module de connexion réutilisable.
+Voir [docs/database.md](docs/database.md) pour l'installation et l'usage.
+
 ## Evaluation du modèle (partie 4)
 
 En attendant le vrai modèle de la partie 3, `evaluate.py` tourne sur un modèle et un jeu de validation factices (`mocks/`).
