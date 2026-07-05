@@ -3,3 +3,4 @@ pandas>=3.0
 matplotlib>=3.11
 seaborn>=0.13
 joblib>=1.5
+pytest>=8.0

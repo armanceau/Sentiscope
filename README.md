@@ -12,3 +12,9 @@ python evaluate.py
 
 Resultats génerés : `figures/confusion_matrix_positive.png`,
 `figures/confusion_matrix_negative.png`, `metrics.json`.
+
+### Tests
+
+```bash
+python -m pytest -v
+```
