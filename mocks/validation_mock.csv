@@ -1,0 +1,17 @@
+id,text,positive,negative
+1,"I love this new phone it is great",1,0
+2,"This service is terrible and awful",0,1
+3,"I am so happy today what a good day",1,0
+4,"I hate waiting in traffic the worst",0,1
+5,"The weather is fine nothing special",0,0
+6,"This movie was amazing and excellent",1,0
+7,"Customer support was bad and made me sad",0,1
+8,"Just had lunch with friends",0,0
+9,"Great job team love the results",1,0
+10,"Worst experience ever truly terrible",0,1
+11,"I feel happy and good about the future",1,0
+12,"This is an awful and bad situation",0,1
+13,"Random neutral tweet about nothing much",0,0
+14,"Excellent service I am so happy",1,0
+15,"I hate this it is the worst",0,1
+16,"Another plain tweet without opinion",0,0
