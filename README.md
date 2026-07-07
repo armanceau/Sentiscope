@@ -1,5 +1,22 @@
 # Sentiscope
 
+## API d'analyse de sentiments (partie 1)
+
+API Flask exposant un endpoint `POST /predict` qui reçoit un tableau de tweets
+et renvoie `{tweet: score}` (score entre -1 et 1). Voir
+[docs/api.md](docs/api.md) pour l'installation, les exemples de requêtes
+(curl/Postman) et la gestion des erreurs.
+
+```bash
+pip install -r requirements.txt
+python build_mock_model.py     # modèle factice en attendant la partie 3
+python app.py                  # http://localhost:5000
+
+curl -X POST http://localhost:5000/predict \
+  -H "Content-Type: application/json" \
+  -d '["I love this", "This is terrible"]'
+```
+
 ## Base de données (partie 2)
 
 Schéma MySQL, import de données annotées et module de connexion réutilisable.
