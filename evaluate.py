@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 import joblib
@@ -13,10 +14,11 @@ import pandas as pd
 import seaborn as sns
 from sklearn.metrics import classification_report, confusion_matrix
 
-# TODO: remplacer par le vrai modele de la aprtie 3 des que son format est figé
-DEFAULT_MODEL_PATH = "mocks/model_mock.joblib"
-# TODO: remplacer par le vrai jeu de validation (issu de db.py / table tweets)
-DEFAULT_DATA_PATH = "mocks/validation_mock.csv"
+from db import fetch_tweets
+
+# Modele reel (etudiant 3, model.py) sauvegarde via joblib. Configurable via
+# MODEL_PATH pour basculer sans changer le code (meme convention que predictor.py).
+DEFAULT_MODEL_PATH = os.environ.get("MODEL_PATH", "model.joblib")
 FIGURES_DIR = Path("figures")
 SCORE_THRESHOLD = 0.0  # seuil pour binariser le score continu en positive/negative
 
@@ -37,6 +39,15 @@ def load_validation_data(data_path: str) -> pd.DataFrame:
     if missing:
         raise ValueError(f"Colonnes manquantes dans {data_path} : {missing}")
     return df
+
+
+def load_validation_data_from_db(engine=None) -> pd.DataFrame:
+    """Charge le jeu de validation depuis la table `tweets` (voir db.py).
+
+    La connexion est pilotee par la variable d'environnement DATABASE_URL
+    (memes conventions que model.py / import_dataset.py).
+    """
+    return fetch_tweets(engine=engine)
 
 
 def predict_labels(model, texts: list[str]) -> tuple[list[int], list[int]]:
@@ -66,9 +77,9 @@ def plot_confusion_matrix(y_true, y_pred, label: str, output_path: Path) -> None
     plt.close()
 
 
-def evaluate(model_path: str, data_path: str) -> dict:
+def evaluate(model_path: str, data_path: str | None = None, engine=None) -> dict:
     model = load_model(model_path)
-    df = load_validation_data(data_path)
+    df = load_validation_data(data_path) if data_path else load_validation_data_from_db(engine=engine)
 
     predicted_positive, predicted_negative = predict_labels(model, df["text"].tolist())
 
@@ -92,7 +103,10 @@ def main() -> None:
     )
     parser.add_argument("--model", default=DEFAULT_MODEL_PATH, help="Chemin vers le modele sauvegarde")
     parser.add_argument(
-        "--data", default=DEFAULT_DATA_PATH, help="Chemin vers le CSV de validation (text, positive, negative)"
+        "--data",
+        default=None,
+        help="Chemin vers un CSV de validation (text, positive, negative). "
+        "Par defaut, charge la table `tweets` via db.py (variable DATABASE_URL).",
     )
     parser.add_argument("--output", default="metrics.json", help="Fichier JSON de sortie pour les metriques")
     args = parser.parse_args()

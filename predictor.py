@@ -6,10 +6,10 @@ interfaces :
 
     predict(tweet: str) -> float   # score entre -1 (tres negatif) et 1 (tres positif)
 
-Tant que le vrai modele n'est pas fige, on charge par defaut le modele factice
-`mocks/model_mock.joblib` (voir build_mock_model.py). Le chemin est configurable
-via la variable d'environnement MODEL_PATH, afin de basculer sans changer le code
-des que l'etudiant 3 livre son modele.
+Par defaut, charge le modele factice `mocks/model_mock.joblib` (voir
+build_mock_model.py), pratique pour developper/tester sans entrainer un vrai
+modele. Le chemin est configurable via la variable d'environnement MODEL_PATH,
+pour basculer vers le vrai modele entraine par model.py (ex. models/sentiment_model.joblib).
 """
 
 from __future__ import annotations

@@ -1,7 +1,9 @@
 """
-Modele factice, a remplacer par le vrai modele de l'etudiant 3 (LogisticRegression
-+ TF-IDF) des que son format de sauvegarde sera fige. Respecte l'interface
-convenue predict(tweet: str) -> float (score entre -1 et 1).
+Modele factice utilise uniquement pour les tests (tests/test_api.py,
+tests/test_evaluate.py) et comme valeur par defaut de MODEL_PATH pour lancer
+l'API sans entrainer un vrai modele. Respecte l'interface convenue
+predict(tweet: str) -> float (score entre -1 et 1), la meme que le vrai
+SentimentModel (model.py).
 """
 
 from __future__ import annotations
