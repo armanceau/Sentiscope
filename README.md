@@ -9,7 +9,7 @@ et renvoie `{tweet: score}` (score entre -1 et 1). Voir
 
 ```bash
 pip install -r requirements.txt
-python build_mock_model.py     # modèle factice en attendant la partie 3
+python build_mock_model.py     # modele factice pour tester l'API sans entrainer un vrai modele
 python app.py                  # http://localhost:5000
 
 curl -X POST http://localhost:5000/predict \
@@ -32,7 +32,11 @@ Le modèle apprend depuis les données de la base MySQL et est planifié pour ê
 python model.py --model-path models/sentiment_model.joblib
 ```
 
-**Important :** Par défaut, l'API et l'évaluation chargent un modèle factice (`mocks/model_mock.joblib`). Pour utiliser le vrai modèle entraîné, vous devez définir la variable d'environnement `MODEL_PATH` avant de lancer `app.py` ou `evaluate.py` :
+**Important :** Par défaut, l'API (`app.py`/`predictor.py`) charge un modèle factice
+(`mocks/model_mock.joblib`), pratique pour développer/tester sans avoir à entraîner un vrai
+modèle. `evaluate.py`, lui, charge par défaut le vrai modèle (voir partie 4). Pour faire tourner
+l'API avec le vrai modèle entraîné, définissez la variable d'environnement `MODEL_PATH` avant de
+lancer `app.py` :
 
 ```bash
 export MODEL_PATH="models/sentiment_model.joblib"
@@ -43,13 +47,18 @@ Voir [CRONTAB_INSTRUCTIONS.md](CRONTAB_INSTRUCTIONS.md) pour configurer le réen
 
 ## Evaluation du modèle (partie 4)
 
-En attendant le vrai modèle de la partie 3, `evaluate.py` tourne sur un modèle et un jeu de validation factices (`mocks/`).
+`evaluate.py` charge le modèle réel entraîné par `model.py` (variable `MODEL_PATH`, comme pour
+`app.py`) et le jeu de validation directement depuis la table `tweets` (variable `DATABASE_URL`,
+voir [docs/database.md](docs/database.md)) :
 
 ```bash
-pip install -r requirements.txt
-python build_mock_model.py
+export DATABASE_URL="mysql+pymysql://root:root@localhost:3306/sentiscope"
+export MODEL_PATH="models/sentiment_model.joblib"
 python evaluate.py
 ```
+
+Un CSV de validation (`text,positive,negative`) peut être fourni en alternative avec `--data`,
+par exemple pour un jeu de validation tenu à l'écart de l'entraînement.
 
 Resultats génerés : `figures/confusion_matrix_positive.png`,
 `figures/confusion_matrix_negative.png`, `metrics.json`.

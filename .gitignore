@@ -9,3 +9,6 @@ venv
 test.db
 model.joblib
 *.joblib
+*.db
+/data/
+/models/
