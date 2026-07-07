@@ -28,8 +28,15 @@ Entraînement d'un modèle de régression logistique avec `scikit-learn` pour an
 Le modèle apprend depuis les données de la base MySQL et est planifié pour être ré-entraîné automatiquement de façon hebdomadaire.
 
 ```bash
-# Entraînement manuel du modèle (génère model.joblib)
-python model.py --model-path model.joblib
+# Entraînement manuel du modèle (génère models/sentiment_model.joblib)
+python model.py --model-path models/sentiment_model.joblib
+```
+
+**Important :** Par défaut, l'API et l'évaluation chargent un modèle factice (`mocks/model_mock.joblib`). Pour utiliser le vrai modèle entraîné, vous devez définir la variable d'environnement `MODEL_PATH` avant de lancer `app.py` ou `evaluate.py` :
+
+```bash
+export MODEL_PATH="models/sentiment_model.joblib"
+python app.py
 ```
 
 Voir [CRONTAB_INSTRUCTIONS.md](CRONTAB_INSTRUCTIONS.md) pour configurer le réentraînement automatique.

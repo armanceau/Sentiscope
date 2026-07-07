@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+
 # Script shell pour automatiser le réentraînement du modèle
 
 # Se placer dans le bon répertoire (à adapter selon le déploiement)

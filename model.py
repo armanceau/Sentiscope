@@ -52,6 +52,10 @@ def train_and_save_model(model_path="model.joblib", limit=None, engine=None):
     
     # La target est 1 si le tweet est positif, 0 s'il est negatif
     y = df["positive"].astype(int)
+    
+    if len(y.unique()) < 2:
+        raise ValueError("L'entraînement nécessite au moins deux classes (positif et négatif), mais une seule classe est présente dans les données.")
+        
     X = df["text"]
     
     model = SentimentModel()

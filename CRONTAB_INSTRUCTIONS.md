@@ -18,10 +18,12 @@ chmod +x retrain_cron.sh
 crontab -e
 ```
 
-Ajoutez la ligne suivante à la fin du fichier pour exécuter le réentraînement chaque dimanche à 3h00 du matin :
+Ajoutez la ligne suivante à la fin du fichier pour exécuter le réentraînement chaque dimanche à 3h00 du matin.
+**Important :** Cron s'exécute dans un environnement minimal. Vous devez fournir la variable `DATABASE_URL` pour que le script puisse se connecter à la base de données en production.
 
 ```cron
-0 3 * * 0 /bin/bash /chemin/vers/Sentiscope/retrain_cron.sh >> /chemin/vers/Sentiscope/retrain.log 2>&1
+# Définissez vos accès à la base de données avant l'exécution du script
+0 3 * * 0 DATABASE_URL="mysql+pymysql://utilisateur:motdepasse@hote:3306/sentiscope" /bin/bash /chemin/vers/Sentiscope/retrain_cron.sh >> /chemin/vers/Sentiscope/retrain.log 2>&1
 ```
 
-*Note : N'oubliez pas de remplacer `/chemin/vers/Sentiscope` par le chemin absolu vers la racine de votre dépôt sur le serveur.*
+*Note : N'oubliez pas d'adapter la chaîne de connexion `DATABASE_URL` ainsi que le chemin `/chemin/vers/Sentiscope` selon la configuration de votre serveur de production.*
