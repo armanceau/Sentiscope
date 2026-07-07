@@ -4,3 +4,8 @@ __pycache__/
 mocks/model_mock.joblib
 metrics.json
 figures/*.png
+.venv
+venv
+test.db
+model.joblib
+*.joblib
