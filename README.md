@@ -22,6 +22,18 @@ curl -X POST http://localhost:5000/predict \
 Schéma MySQL, import de données annotées et module de connexion réutilisable.
 Voir [docs/database.md](docs/database.md) pour l'installation et l'usage.
 
+## Machine Learning & Réentraînement (partie 3)
+
+Entraînement d'un modèle de régression logistique avec `scikit-learn` pour analyser le sentiment des tweets.
+Le modèle apprend depuis les données de la base MySQL et est planifié pour être ré-entraîné automatiquement de façon hebdomadaire.
+
+```bash
+# Entraînement manuel du modèle (génère model.joblib)
+python model.py --model-path model.joblib
+```
+
+Voir [CRONTAB_INSTRUCTIONS.md](CRONTAB_INSTRUCTIONS.md) pour configurer le réentraînement automatique.
+
 ## Evaluation du modèle (partie 4)
 
 En attendant le vrai modèle de la partie 3, `evaluate.py` tourne sur un modèle et un jeu de validation factices (`mocks/`).
