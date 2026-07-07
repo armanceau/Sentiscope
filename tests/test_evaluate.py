@@ -55,10 +55,10 @@ def test_load_model_rejects_object_without_predict(tmp_path):
         load_model(str(path))
 
 
-def test_evaluate_end_to_end_with_mock_model():
+def test_evaluate_end_to_end_with_mock_model(tmp_path):
     build_and_save()
 
-    metrics = evaluate("mocks/model_mock.joblib", "mocks/validation_mock.csv")
+    metrics = evaluate("mocks/model_mock.joblib", "mocks/validation_mock.csv", figures_dir=tmp_path)
 
     assert set(metrics) == {"positive", "negative"}
     for label in ("positive", "negative"):

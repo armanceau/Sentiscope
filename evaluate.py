@@ -77,9 +77,10 @@ def plot_confusion_matrix(y_true, y_pred, label: str, output_path: Path) -> None
     plt.close()
 
 
-def evaluate(model_path: str, data_path: str | None = None, engine=None) -> dict:
+def evaluate(model_path: str, data_path: str | None = None, engine=None, figures_dir: Path | None = None) -> dict:
     model = load_model(model_path)
     df = load_validation_data(data_path) if data_path else load_validation_data_from_db(engine=engine)
+    figures_dir = figures_dir or FIGURES_DIR
 
     predicted_positive, predicted_negative = predict_labels(model, df["text"].tolist())
 
@@ -92,7 +93,7 @@ def evaluate(model_path: str, data_path: str | None = None, engine=None) -> dict
             y_true, y_pred, labels=[0, 1], output_dict=True, zero_division=0
         )
         metrics[label] = report
-        plot_confusion_matrix(y_true, y_pred, label, FIGURES_DIR / f"confusion_matrix_{label}.png")
+        plot_confusion_matrix(y_true, y_pred, label, figures_dir / f"confusion_matrix_{label}.png")
 
     return metrics
 
