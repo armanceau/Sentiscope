@@ -63,6 +63,19 @@ par exemple pour un jeu de validation tenu à l'écart de l'entraînement.
 Resultats génerés : `figures/confusion_matrix_positive.png`,
 `figures/confusion_matrix_negative.png`, `metrics.json`.
 
+### Rapport PDF
+
+Le rapport final (`rapport_evaluation.pdf`) est généré à partir de la source éditable
+`rapport_evaluation.md` (matrices de confusion, précision/rappel/F1-score, analyse des biais,
+recommandations), pour rester facile à corriger sans toucher au PDF directement :
+
+```bash
+pip install markdown xhtml2pdf
+python generate_report.py     # lit rapport_evaluation.md -> ecrit rapport_evaluation.pdf
+```
+
+À lancer après `evaluate.py`, puisque le rapport embarque les figures qu'il génère.
+
 ### Tests
 
 ```bash
